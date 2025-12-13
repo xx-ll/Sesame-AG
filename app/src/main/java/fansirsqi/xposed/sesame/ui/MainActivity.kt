@@ -303,15 +303,13 @@ class MainActivity : BaseActivity() {
                 return true
             }
 
-            4 -> { // 查看错误日志文件（加密码验证）
-                showPasswordDialog {
-                    val errorData = "file://" + Files.getErrorLogFile().absolutePath
-                    val errorIt = Intent(this, HtmlViewerActivity::class.java)
-                    errorIt.putExtra("nextLine", false)
-                    errorIt.putExtra("canClear", true)
-                    errorIt.data = errorData.toUri()
-                    startActivity(errorIt)
-                }
+            4 -> { // 查看错误日志文件
+                val errorData = "file://" + Files.getErrorLogFile().absolutePath
+                val errorIt = Intent(this, HtmlViewerActivity::class.java)
+                errorIt.putExtra("nextLine", false)
+                errorIt.putExtra("canClear", true)
+                errorIt.data = errorData.toUri()
+                startActivity(errorIt)
                 return true
             }
 
