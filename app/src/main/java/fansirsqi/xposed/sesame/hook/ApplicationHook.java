@@ -483,14 +483,6 @@ public class ApplicationHook {
         // 初始化反射缓存
         ReflectionCache.initialize(classLoader);
 
-        // Hook验证码关闭功能
-        try {
-            CaptchaHook.INSTANCE.setupHook(classLoader);
-            Log.runtime(TAG, "验证码Hook系统已初始化");
-        } catch (Throwable t) {
-            Log.printStackTrace(TAG, "验证码Hook初始化失败", t);
-        }
-
         try {
             // 在Hook Application.attach 之前，先 deoptimize LoadedApk.makeApplicationInner
             try {
