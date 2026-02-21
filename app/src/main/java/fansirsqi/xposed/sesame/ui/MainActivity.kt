@@ -16,8 +16,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import fansirsqi.xposed.sesame.SesameApplication.Companion.PREFERENCES_KEY
 import fansirsqi.xposed.sesame.SesameApplication.Companion.hasPermissions
-import fansirsqi.xposed.sesame.ui.extension.NativeComposeBridge
-import fansirsqi.xposed.sesame.ui.extension.WatermarkLayer
 import fansirsqi.xposed.sesame.ui.extension.openUrl
 import fansirsqi.xposed.sesame.ui.extension.performNavigationToSettings
 import fansirsqi.xposed.sesame.ui.screen.MainScreen
@@ -94,24 +92,20 @@ class MainActivity : ComponentActivity() {
 
             // AppTheme 会处理状态栏颜色
             AppTheme(dynamicColor = isDynamicColor) {
-                WatermarkLayer(
-                    uidList = uidList
-                ) {
-                    MainScreen(
-                        oneWord = oneWord,
-                        activeUserName = activeUser?.showName ?: "未载入",
-                        moduleStatus = moduleStatus,
-                        viewModel = viewModel,
-                        isDynamicColor = isDynamicColor, // 传给 MainScreen
-                        // 传入回调
-                        userList = userList, // 传入列表
-                        // 🔥 处理跳转逻辑
-                        onNavigateToSettings = { selectedUser ->
-                            performNavigationToSettings(selectedUser)
-                        },
-                        onEvent = { event -> handleEvent(event) }
-                    )
-                }
+                MainScreen(
+                    oneWord = oneWord,
+                    activeUserName = activeUser?.showName ?: "未载入",
+                    moduleStatus = moduleStatus,
+                    viewModel = viewModel,
+                    isDynamicColor = isDynamicColor, // 传给 MainScreen
+                    // 传入回调
+                    userList = userList, // 传入列表
+                    // 🔥 处理跳转逻辑
+                    onNavigateToSettings = { selectedUser ->
+                        performNavigationToSettings(selectedUser)
+                    },
+                    onEvent = { event -> handleEvent(event) }
+                )
             }
         }
     }
@@ -155,7 +149,7 @@ class MainActivity : ComponentActivity() {
             MainUiEvent.OpenFarmLog -> openLogFile(Files.getFarmLogFile())
             MainUiEvent.OpenOtherLog -> openLogFile(Files.getOtherLogFile())
             MainUiEvent.OpenGithub -> openUrl("https://github.com/Fansirsqi/Sesame-TK")
-            MainUiEvent.OpenErrorLog -> executeWithVerification { openLogFile(Files.getErrorLogFile()) }
+            MainUiEvent.OpenErrorLog -> openLogFile(Files.getErrorLogFile())
             MainUiEvent.OpenAllLog -> openLogFile(Files.getRecordLogFile())
             MainUiEvent.OpenDebugLog -> openLogFile(Files.getDebugLogFile())
             is MainUiEvent.ToggleIconHidden -> {
@@ -209,12 +203,4 @@ class MainActivity : ComponentActivity() {
         }
         startActivity(intent)
     }
-
-    private fun executeWithVerification(block: () -> Unit) {
-        // 如果需要生物识别验证，可以在这里添加逻辑
-        // 目前直接执行
-        block()
-    }
-
-
 }

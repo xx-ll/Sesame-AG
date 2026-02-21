@@ -27,13 +27,6 @@ fun Context.openUrl(url: String) {
     }
 }
 
-/**
- * 扩展函数：带密码验证的执行器
- */
-fun Context.executeWithVerification(action: () -> Unit) {
-    action()
-}
-
 fun joinQQGroup(context: Context) {
     val intent = Intent()
 //    intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key")
